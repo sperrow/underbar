@@ -80,11 +80,17 @@
   _.filter = function(collection, test) {
     var arr = [];
 
-    for(var i = 0, length = collection.length; i < length; i++) {
+    /*for(var i = 0, length = collection.length; i < length; i++) {
       if(test(collection[i], i, collection)) {
         arr.push(collection[i]);
       }
-    }
+    }*/
+
+    _.each(collection, function(item) {
+      if(test(item)) {
+        arr.push(item);
+      }
+    });
 
     return arr;
   };
