@@ -80,12 +80,6 @@
   _.filter = function(collection, test) {
     var arr = [];
 
-    /*for(var i = 0, length = collection.length; i < length; i++) {
-      if(test(collection[i], i, collection)) {
-        arr.push(collection[i]);
-      }
-    }*/
-
     _.each(collection, function(item) {
       if(test(item)) {
         arr.push(item);
@@ -140,9 +134,9 @@
     // the members, it also maintains an array of results.
     var results = [];
 
-    for(var i = 0, length = collection.length; i < length; i++) {
-      results.push(iterator(collection[i], i, collection));
-    }
+    _.each(collection, function(item) {
+      results.push(iterator(item));
+    })
 
     return results;
   };
@@ -187,6 +181,7 @@
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
     var result;
+
     if(accumulator === undefined) {
       result = collection[0];
       collection.shift();
@@ -194,9 +189,9 @@
       result = accumulator;
     }
 
-    for(var i = 0, length = collection.length; i < length; i++) {
-      result = iterator(result, collection[i]);
-    }
+    _.each(collection, function(item) {
+      result = iterator(result, item);
+    });
 
     return result;
   };
