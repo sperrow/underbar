@@ -347,12 +347,13 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
-    var args = [];
+    var args = Array.prototype.slice.call(arguments, 2);
+    /* old solution
     for(var i = 2; i < arguments.length; i++) {
       args.push(arguments[i]);
-    }
-    return setTimeout(function() {
-      return func.apply(this, args);
+    }*/
+    setTimeout(function() {
+      func.apply(null, args);
     }, wait);
   };
 
@@ -373,7 +374,11 @@
 
     var equals = function(arr1, arr2) {
       for(var i = 0; i < arr1.length; i++) {
-        if(arr1[i] !== arr2[i]) {
+        if(Array.isArray(arr1[i]) && Array.isArray(arr2[i])) {
+          if(!equals(arr1[i], arr2[i])) {
+            return false;
+          }
+        } else if(arr1[i] !== arr2[i]) {
           return false;
         }
       }
